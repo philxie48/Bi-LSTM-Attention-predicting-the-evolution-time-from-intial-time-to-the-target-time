@@ -1,0 +1,107 @@
+# 500-Epoch Training Plan for Sequence Generator Model
+
+## Parameter Decay Schedule
+
+### Learning Rate Schedule
+- Epochs 1-100: Start with 0.001, decay to 0.0005 (OneCycleLR)
+  - Includes warmup from 0.0005 to 0.001 for first 30% of steps, then cosine decay to 0.0005
+- Epochs 101-200: Start with 0.0005, decay to 0.0001
+- Epochs 201-300: Start with 0.0001, decay to 0.00005
+- Epochs 301-400: Start with 0.00005, decay to 0.00001
+- Epochs 401-500: Fixed at 0.00001 (minimum learning rate)
+
+### Teacher Forcing Ratio Schedule
+- Epochs 1-100: Start with 0.7, decay to 0.6
+- Epochs 101-200: Start with 0.6, decay to 0.5
+- Epochs 201-300: Start with 0.5, decay to 0.4
+- Epochs 301-400: Start with 0.4, decay to 0.3
+- Epochs 401-500: Fixed at 0.3 (minimum teacher forcing)
+
+### Weight Decay Schedule
+- Epochs 1-100: 0.01
+- Epochs 101-200: 0.008
+- Epochs 201-300: 0.005
+- Epochs 301-400: 0.003
+- Epochs 401-500: 0.001
+
+### Noise Level Schedule
+- Epochs 1-100: 0.05
+- Epochs 101-200: 0.04
+- Epochs 201-300: 0.03
+- Epochs 301-400: 0.02
+- Epochs 401-500: 0.01
+
+### Gradient Clipping Schedule
+- Epochs 1-100: 1.0
+- Epochs 101-200: 0.9
+- Epochs 201-300: 0.8
+- Epochs 301-400: 0.7
+- Epochs 401-500: 0.6
+
+### Loss Function Parameters
+- Epochs 1-100: alpha=0.8, max_lag=10
+- Epochs 101-200: alpha=0.75, max_lag=15
+- Epochs 201-300: alpha=0.7, max_lag=15
+- Epochs 301-400: alpha=0.65, max_lag=20
+- Epochs 401-500: alpha=0.6, max_lag=20
+
+## Continuous Training Commands
+
+### For epochs 101-200:
+```
+python continue_training.py --model_path "D:/neural network/combined_approach/best_model_combined.pth" --epochs 100 --start_lr 0.0005 --min_lr 0.0001 --output_dir "D:/neural network/combined_approach_101_200"
+```
+
+### For epochs 201-300:
+```
+python continue_training.py --model_path "D:/neural network/combined_approach_101_200/best_model_combined.pth" --epochs 100 --start_lr 0.0001 --min_lr 0.00005 --output_dir "D:/neural network/combined_approach_201_300"
+```
+
+### For epochs 301-400:
+```
+python continue_training.py --model_path "D:/neural network/combined_approach_201_300/best_model_combined.pth" --epochs 100 --start_lr 0.00005 --min_lr 0.00001 --output_dir "D:/neural network/combined_approach_301_400"
+```
+
+### For epochs 401-500:
+```
+python continue_training.py --model_path "D:/neural network/combined_approach_301_400/best_model_combined.pth" --epochs 100 --start_lr 0.00001 --min_lr 0.00001 --output_dir "D:/neural network/combined_approach_401_500"
+```
+
+## Expected Outcomes and Monitoring
+
+### What to Monitor
+1. Gap between training and validation loss
+   - Should gradually decrease in later epochs
+   - If gap widens, consider increasing regularization
+
+2. Validation loss plateaus
+   - Short plateaus are normal
+   - If plateau lasts >30 epochs, consider adjusting learning rate
+
+3. Component-specific losses
+   - Monitor which components have higher losses
+   - May need to adjust loss weighting for problematic components
+
+### Expected Behavior
+- Early epochs (1-200): Rapid improvement, possibly with overfitting
+- Middle epochs (201-300): Slower improvement, better generalization
+- Later epochs (301-500): Fine-tuning, minimal improvements but better stability
+
+## Modifications to Consider
+If progress stalls at any point, consider:
+
+1. Adjusting alpha in combined loss function
+   - Decrease alpha to focus more on temporal patterns
+   - Increase alpha to focus more on point-wise accuracy
+
+2. Implementing learning rate warm restarts
+   - Reset learning rate periodically to escape local minima
+
+3. Increasing model capacity
+   - Add more hidden units if underfitting persists
+
+4. Curriculum learning
+   - Start with easier sequences, gradually introduce harder ones
+
+5. Component-specific loss weighting
+   - Adjust weights for individual components based on performance
