@@ -151,7 +151,7 @@ print(f"Device: {torch.cuda.get_device_name()}")
 phase-field-neural-sequence-generation/
 ├── README.md                          # This file
 ├── requirements.txt                   # Python dependencies
-├── realization.md                     # Technical implementation details
+├── Theory_background.md               # Technical implementation details
 ├── sample/                            # Data generation pipeline
 │   ├── sample_produce.md              # Data pipeline documentation
 │   ├── phasefield.py                  # Phase field simulation
@@ -633,3 +633,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 For detailed technical information, see [realization.md](realization.md).
 For training specifics, see [training.md](sequence_generator/training.md).
 For data pipeline details, see [sample_produce.md](sample/sample_produce.md).
+
