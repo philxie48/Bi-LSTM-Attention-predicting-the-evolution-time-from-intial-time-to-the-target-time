@@ -159,6 +159,7 @@ phase-field-neural-sequence-generation/
 │   ├── extract_pca_files.py           # Data extraction
 │   ├── trans_npz to csv.py            # NPZ to CSV conversion
 │   └── simple_npz_to_csv.py           # Alternative converter
+│   └── visualiztion.py                # Visualization for the vtk results
 ├── sequence_generator/                # Neural network training
 │   ├── training.md                    # Training documentation
 │   ├── train_pure_mae.py              # Pure MAE loss training
@@ -201,6 +202,8 @@ python phasefield.py
 ```
 
 **Output:** VTK files in `D:/sample/{batch_name}/`
+
+**Visualization:** input the Vtk folder's dir in the 113 line of visualiztion.py
 
 ### Step 2: Process with PCA Analysis
 
@@ -633,4 +636,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 For detailed technical information, see [realization.md](realization.md).
 For training specifics, see [training.md](sequence_generator/training.md).
 For data pipeline details, see [sample_produce.md](sample/sample_produce.md).
+
 
