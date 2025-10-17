@@ -171,11 +171,17 @@ phase-field-neural-sequence-generation/
 │   ├── run_*_*.bat                    # Training batch files
 │   ├── run_custom_prediction.py       # Sequence generation from initial conditions
 │   ├── simple_time_deduction.py       # Time position deduction
+│   ├── predict_and_deduce_time.py     #integrated sequence generate and time deduction
 │   ├── prediction.md                  # Prediction usage documentation
 │   └── mae100/                        # Additional utilities
 ├── models/                            # Saved model checkpoints
 ├── data/                              # Generated datasets
 └── results/                           # Training results and analysis
+│   ├──example use 100 mae 
+    │   ├── merge_graph.png                # comparison between original sequence and generated sequence
+    │   ├── all_components_overlay.png     # all components curve plot and the predict target time position
+    │   ├── all_components_with_target.png # each component's corresponding target state position
+    │   ├── probability_distribution.png   # probabily distribution for the target time
 ```
 
 ## 📖 Usage Guide
@@ -636,5 +642,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 For detailed technical information, see [realization.md](realization.md).
 For training specifics, see [training.md](sequence_generator/training.md).
 For data pipeline details, see [sample_produce.md](sample/sample_produce.md).
+
 
 
