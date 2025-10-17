@@ -8,6 +8,7 @@ The prediction system provides two key functionalities:
 
 1. **Sequence Generation** (`run_custom_prediction.py`): Generate complete 151-step sequences from initial conditions
 2. **Time Deduction** (`simple_time_deduction.py`): Find most likely time positions for given target values
+3. **sequence generation and time deduction merged** (`predict_and_deduce_time.py`): merged those two functions, user can choose which model to predict
 
 ## Table of Contents
 
@@ -603,3 +604,4 @@ model = model.half()  # Use FP16
 ```
 
 This comprehensive prediction documentation provides users with everything needed to effectively use the trained models for both forward prediction and inverse time deduction tasks.
+
